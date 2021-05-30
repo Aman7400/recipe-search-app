@@ -66,13 +66,13 @@ const Search = () => {
   const url = `https://api.edamam.com/search?q=${query}&app_id=${process.env.REACT_APP_APP_ID}&app_key=${process.env.REACT_APP_API_KEY}`;
 
   React.useEffect(() => {
-    getRecipes();
-  }, [query]);
+    const getRecipes = async () => {
+      const data = await (await fetch(url)).json();
+      setRecipes(data.hits);
+    };
 
-  const getRecipes = async () => {
-    const data = await (await fetch(url)).json();
-    setRecipes(data.hits);
-  };
+    getRecipes();
+  }, [url]);
 
   return (
     <>
